@@ -1,0 +1,57 @@
+{
+  "A1": {
+    "listening": [
+      { "name": "English Class 101", "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6DojhKofS7isS8D96068Lw" },
+      { "name": "VOA Learning English Level 1", "url": "https://learningenglish.voanews.com/z/4729" },
+      { "name": "BBC Learning English Easy", "url": "https://feeds.bbci.co.uk/learningenglish/easy/rss.xml" }
+    ],
+    "reading": [
+      { "name": "Learn English Kids", "url": "https://learnenglishkids.britishcouncil.org/rss.xml" },
+      { "name": "VOA Learning English Articles", "url": "https://learningenglish.voanews.com/api/zj-pqrl-vomx-tpebyyqo" }
+    ]
+  },
+  "A2": {
+    "listening": [
+      { "name": "BBC Learning English", "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCHaHD477h-FeBbVh9Sh7syA" },
+      { "name": "Coffee Break English", "url": "https://coffeebreaklanguages.com/feed/podcast/" },
+      { "name": "VOA Learning English Level 2", "url": "https://learningenglish.voanews.com/z/5199" }
+    ],
+    "reading": [
+      { "name": "Simple English Wikipedia", "url": "https://simple.wikipedia.org/w/api.php?action=featuredfeed&feed=featured&format=xml" },
+      { "name": "British Council LearnEnglish A2", "url": "https://learnenglish.britishcouncil.org/rss.xml" }
+    ]
+  },
+  "B1": {
+    "listening": [
+      { "name": "6 Minute English", "url": "https://podcasts.files.bbci.co.uk/p02pc9ny.rss" },
+      { "name": "VOA Learning English", "url": "https://learningenglish.voanews.com/podcasts.xml" },
+      { "name": "British Council Podcasts B1", "url": "https://learnenglish.britishcouncil.org/general-english/audio-series/podcasts/series-3/rss.xml" }
+    ],
+    "reading": [
+      { "name": "Reddit News", "url": "https://www.reddit.com/r/news/.rss" },
+      { "name": "VOA Learning English News", "url": "https://learningenglish.voanews.com/z/8133" }
+    ]
+  },
+  "B2": {
+    "listening": [
+      { "name": "TED Talks", "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug" },
+      { "name": "Luke's English Podcast", "url": "https://teacherluke.co.uk/feed/" },
+      { "name": "All Ears English", "url": "https://allearsenglish.com/feed/podcast/" }
+    ],
+    "reading": [
+      { "name": "The Verge", "url": "https://www.theverge.com/rss/index.xml" },
+      { "name": "BBC News", "url": "http://feeds.bbci.co.uk/news/rss.xml" }
+    ]
+  },
+  "C1": {
+    "listening": [
+      { "name": "The Daily Podcast", "url": "https://feeds.simplecast.com/54nAGpEC" },
+      { "name": "The Economist Podcasts", "url": "https://www.economist.com/podcasts/rss" },
+      { "name": "Thinking in English", "url": "https://thinkinginenglish.buzzsprout.com/2113605.rss" }
+    ],
+    "reading": [
+      { "name": "The Economist", "url": "https://www.economist.com/england/rss.xml" },
+      { "name": "The Guardian", "url": "https://www.theguardian.com/uk/rss" }
+    ]
+  }
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Immersion Newsfeed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Bộ lọc */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: #e2e8f0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Danh sách nội dung */
+        #newsfeed {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            color: #64748b;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: #f1f5f9;
+            text-transform: uppercase;
+        }
+
+        .card-title {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .card-title a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .card-title a:hover {
+            color: var(--primary);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .card-footer {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Daily Immersion</h1>
+        <p>Chọn cấp độ của bạn và bắt đầu đắm mình vào tiếng Anh</p>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" data-level="all">All Levels</button>
+        <button class="filter-btn" data-level="A1">A1</button>
+        <button class="filter-btn" data-level="A2">A2</button>
+        <button class="filter-btn" data-level="B1">B1</button>
+        <button class="filter-btn" data-level="B2">B2</button>
+        <button class="filter-btn" data-level="C1">C1</button>
+    </div>
+
+    <div id="newsfeed">
+        </div>
+</div>
+
+<script>
+    let allData = [];
+
+    // 1. Lấy dữ liệu từ file data.json
+    async function loadFeeds() {
+        try {
+            const response = await fetch('data.json');
+            allData = await response.json();
+            renderFeeds('all');
+        } catch (error) {
+            document.getElementById('newsfeed').innerHTML = "<p>Đang chờ GitHub Action cập nhật dữ liệu lần đầu...</p>";
+        }
+    }
+
+    // 2. Hiển thị dữ liệu ra màn hình
+    function renderFeeds(level) {
+        const container = document.getElementById('newsfeed');
+        container.innerHTML = '';
+
+        const filtered = level === 'all' 
+            ? allData 
+            : allData.filter(item => item.level === level);
+
+        filtered.forEach(item => {
+            const date = new Date(item.date).toLocaleDateString('vi-VN');
+            const icon = item.category === 'listening' ? 'fa-headphones' : 'fa-book-open';
+            
+            const card = `
+                <div class="card">
+                    <div class="card-meta">
+                        <span class="badge" style="color: #2563eb;">${item.level}</span>
+                        <span><i class="fas ${icon}"></i> ${item.category}</span>
+                        <span>• ${item.source}</span>
+                    </div>
+                    <h3 class="card-title">
+                        <a href="${item.link}" target="_blank">${item.title}</a>
+                    </h3>
+                    <p class="card-desc">${item.description}</p>
+                    <div class="card-footer">Cập nhật ngày: ${date}</div>
+                </div>
+            `;
+            container.innerHTML += card;
+        });
+    }
+
+    // 3. Xử lý sự kiện bấm nút lọc
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            renderFeeds(e.target.dataset.level);
+        });
+    });
+
+    // Khởi chạy
+    loadFeeds();
+</script>
+
+</body>
+</html>
