@@ -1,57 +1,205 @@
 {
   "A1": {
-    "listening": [
-      { "name": "English Class 101", "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6DojhKofS7isS8D96068Lw" },
-      { "name": "VOA Learning English Level 1", "url": "https://learningenglish.voanews.com/z/4729" },
-      { "name": "BBC Learning English Easy", "url": "https://feeds.bbci.co.uk/learningenglish/easy/rss.xml" }
-    ],
-    "reading": [
-      { "name": "Learn English Kids", "url": "https://learnenglishkids.britishcouncil.org/rss.xml" },
-      { "name": "VOA Learning English Articles", "url": "https://learningenglish.voanews.com/api/zj-pqrl-vomx-tpebyyqo" }
-    ]
+    "listening": [ ],
+    "reading": [ ]
   },
   "A2": {
     "listening": [
-      { "name": "BBC Learning English", "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCHaHD477h-FeBbVh9Sh7syA" },
-      { "name": "Coffee Break English", "url": "https://coffeebreaklanguages.com/feed/podcast/" },
-      { "name": "VOA Learning English Level 2", "url": "https://learningenglish.voanews.com/z/5199" }
+      {
+        "name": "English Comprehensible Input for ESL Beginners",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSW8FB6e8tUGEaDsoe7SlWw"
+      }
     ],
-    "reading": [
-      { "name": "Simple English Wikipedia", "url": "https://simple.wikipedia.org/w/api.php?action=featuredfeed&feed=featured&format=xml" },
-      { "name": "British Council LearnEnglish A2", "url": "https://learnenglish.britishcouncil.org/rss.xml" }
-    ]
+    "reading": []
   },
   "B1": {
     "listening": [
-      { "name": "6 Minute English", "url": "https://podcasts.files.bbci.co.uk/p02pc9ny.rss" },
-      { "name": "VOA Learning English", "url": "https://learningenglish.voanews.com/podcasts.xml" },
-      { "name": "British Council Podcasts B1", "url": "https://learnenglish.britishcouncil.org/general-english/audio-series/podcasts/series-3/rss.xml" }
+      {
+        "name": "BBC Learning English",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCHaHD477h-FeBbVh9Sh7syA"
+      },
+      {
+        "name": "Easy Stories in English",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCCoLYcsDxFjnFPYF057l-7w"
+      },
+      {
+        "name": "English Addict with Mr Duncan",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8pPDhxSn1nee70LRKJ0p3g"
+      },
+      {
+        "name": "Learn English with Bob the Canadian",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCZJJTxA36ZPNTJ1WFIByaeA"
+      },
+      {
+        "name": "Learn English with EnglishClass101.com",
+        "url": "https://www.youtube.com/@EnglishClass101"
+      }
     ],
     "reading": [
-      { "name": "Reddit News", "url": "https://www.reddit.com/r/news/.rss" },
-      { "name": "VOA Learning English News", "url": "https://learningenglish.voanews.com/z/8133" }
+      {
+        "name": "News in Levels",
+        "url": "https://www.newsinlevels.com/feed/"
+      }
     ]
   },
   "B2": {
     "listening": [
-      { "name": "TED Talks", "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug" },
-      { "name": "Luke's English Podcast", "url": "https://teacherluke.co.uk/feed/" },
-      { "name": "All Ears English", "url": "https://allearsenglish.com/feed/podcast/" }
+      {
+        "name": "Bailey Schildbach",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCXEHlIvfdsgKnstJ8ZwIgLQ"
+      },
+      {
+        "name": "TED-Ed",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsooa4yRKGN_zEE8iknghZA"
+      },
+      {
+        "name": "Vox",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCLXo7UDZvByw2ixzpQCufnA"
+      },
+      {
+        "name": "TED",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug"
+      }
     ],
     "reading": [
-      { "name": "The Verge", "url": "https://www.theverge.com/rss/index.xml" },
-      { "name": "BBC News", "url": "http://feeds.bbci.co.uk/news/rss.xml" }
+      {
+        "name": "Vox",
+        "url": "https://www.vox.com/rss/index.xml"
+      }
     ]
   },
   "C1": {
     "listening": [
-      { "name": "The Daily Podcast", "url": "https://feeds.simplecast.com/54nAGpEC" },
-      { "name": "The Economist Podcasts", "url": "https://www.economist.com/podcasts/rss" },
-      { "name": "Thinking in English", "url": "https://thinkinginenglish.buzzsprout.com/2113605.rss" }
+      {
+        "name": "The Tonight Show Starring Jimmy Fallon",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8-Th83bH_thdKZDJCrn88g"
+      },
+      {
+        "name": "Team Coco",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCi7GJNg51C3jgmYTUwqoUXA"
+      },
+      {
+        "name": "The Late Show with Stephen Colbert",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCMtFAi84ehTSYSE9XoHefig"
+      },
+      {
+        "name": "Shark Tank Global",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCREgA-BmOocJ9Is_bZV6aJQ"
+      },
+      {
+        "name": "Real Time with Bill Maher",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCy6kyFxaMqGtpE3pQTflK8A"
+      },
+      {
+        "name": "Great Big Story",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCajXeitgFL-rb5-gXI-aG8Q"
+      },
+      {
+        "name": "Good Mythical Morning",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC4PooiX37Pld1T8J5SYT-SQ"
+      },
+      {
+        "name": "First We Feast",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCPD_bxCRGpmmeQcbe2kpPaA"
+      }
     ],
     "reading": [
-      { "name": "The Economist", "url": "https://www.economist.com/england/rss.xml" },
-      { "name": "The Guardian", "url": "https://www.theguardian.com/uk/rss" }
+      {
+        "name": "r/AskReddit",
+        "url": "https://www.reddit.com/r/AskReddit/.rss"
+      },
+      {
+        "name": "r/relationships",
+        "url": "https://www.reddit.com/r/relationships/.rss"
+      },
+      {
+        "name": "r/AmItheAsshole",
+        "url": "https://www.reddit.com/r/AmItheAsshole/.rss"
+      },
+      {
+        "name": "r/todayilearned",
+        "url": "https://www.reddit.com/r/todayilearned/.rss"
+      },
+      {
+        "name": "r/TrueOffMyChest",
+        "url": "https://www.reddit.com/r/TrueOffMyChest/.rss"
+      },
+      {
+        "name": "r/CasualConversation",
+        "url": "https://www.reddit.com/r/CasualConversation/.rss"
+      },
+      {
+        "name": "r/NoStupidQuestions",
+        "url": "https://www.reddit.com/r/NoStupidQuestions/.rss"
+      },
+      {
+        "name": "r/tifu",
+        "url": "https://www.reddit.com/r/tifu/.rss"
+      },
+      {
+        "name": "r/confessions",
+        "url": "https://www.reddit.com/r/confessions/.rss"
+      },
+      {
+        "name": "r/AskReddit",
+        "url": "https://www.reddit.com/r/AskReddit/.rss"
+      },
+      {
+        "name": "r/letsnotmeet",
+        "url": "https://www.reddit.com/r/letsnotmeet/.rss"
+      },
+      {
+        "name": "r/HumansBeingBros",
+        "url": "https://www.reddit.com/r/HumansBeingBros/.rss"
+      },
+      {
+        "name": "r/explainlikeimfive",
+        "url": "https://www.reddit.com/r/explainlikeimfive/.rss"
+      },
+      {
+        "name": "r/showerthoughts",
+        "url": "https://www.reddit.com/r/showerthoughts/.rss"
+      },
+      {
+        "name": "r/longform",
+        "url": "https://www.reddit.com/r/longform/.rss"
+      },
+      {
+        "name": "r/Longreads",
+        "url": "https://www.reddit.com/r/Longreads/.rss"
+      },
+      {
+        "name": "r/DepthHub",
+        "url": "https://www.reddit.com/r/DepthHub/.rss"
+      },
+      {
+        "name": "r/TrueReddit",
+        "url": "https://www.reddit.com/r/TrueReddit/.rss"
+      },
+      {
+        "name": "r/psychology",
+        "url": "https://www.reddit.com/r/psychology/.rss"
+      },
+      {
+        "name": "r/LifeProTips",
+        "url": "https://www.reddit.com/r/LifeProTips/.rss"
+      },
+      {
+        "name": "r/FoodForThought",
+        "url": "https://www.reddit.com/r/FoodForThought/.rss"
+      },
+      {
+        "name": "r/IWantToLearn",
+        "url": "https://www.reddit.com/r/IWantToLearn/.rss"
+      },
+      {
+        "name": "r/changemyview",
+        "url": "https://www.reddit.com/r/changemyview/.rss"
+      },
+      {
+        "name": "r/TrueAskReddit",
+        "url": "https://www.reddit.com/r/TrueAskReddit/.rss"
+      }
     ]
   }
 }

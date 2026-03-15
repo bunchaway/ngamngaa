@@ -26,16 +26,27 @@ def fetch_feeds():
                             dt = parser.parse(published_parsed)
                         else:
                             dt = datetime.datetime.now()
+                        
+                        # Lấy ảnh thumbnail nếu là YouTube
+                        thumbnail = ""
+                        if 'media_thumbnail' in entry:
+                            thumbnail = entry.media_thumbnail[0]['url']
+                        elif 'links' in entry: # Backup cho một số nguồn khác
+                            for link in entry.links:
+                                if 'image' in link.get('rel', ''):
+                                    thumbnail = link.href
 
                         item = {
                             "title": entry.title,
                             "link": entry.link,
                             "source": feed['name'],
                             "level": level,
-                            "category": category,
+                            "category": category, # "listening" sẽ tương ứng với Youtube button
                             "date": dt.isoformat(),
-                            "description": entry.get('summary', '')[:200] + '...' # Cắt ngắn mô tả
+                            "thumbnail": thumbnail, # Thêm dòng này
+                            "description": entry.get('summary', '')[:200] + '...'
                         }
+
                         all_items.append(item)
                 except Exception as e:
                     print(f"Lỗi tại {feed['name']}: {e}")

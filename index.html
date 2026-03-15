@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Immersion Newsfeed</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Ngâm ngaa - Bunchaway</title>
     <style>
         :root {
             --primary: #2563eb;
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #1e293b;
+            --btn-idle: #e2e8f0;
         }
 
         body {
+            /* Sử dụng font hệ thống có sẵn */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
             padding: 20px;
+            line-height: 1.5;
         }
 
         .container {
@@ -28,72 +30,111 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        /* Bộ lọc */
+        header h1 { margin-bottom: 5px; }
+        header p { color: #64748b; margin-top: 0; }
+
+        /* Bộ lọc hợp nhất trên cùng 1 hàng */
         .filters {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             position: sticky;
             top: 10px;
             z-index: 100;
+            background: rgba(248, 250, 252, 0.9);
+            padding: 10px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Group để phân biệt Media và Level (vẫn nằm trên 1 hàng) */
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            padding: 4px;
+            background: #f1f5f9;
+            border-radius: 25px;
         }
 
         button {
             padding: 8px 16px;
             border: none;
             border-radius: 20px;
-            background: #e2e8f0;
+            background: transparent;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s;
+            font-size: 0.85rem;
+            color: #64748b;
+            transition: all 0.2s;
         }
 
+        /* Màu xanh đồng nhất khi chọn */
         button.active {
             background: var(--primary);
             color: white;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
 
-        /* Danh sách nội dung */
+        /* Tìm và thay thế đoạn #newsfeed cũ bằng đoạn này */
         #newsfeed {
             display: grid;
+            /* Tự động tính toán số cột: tối thiểu 200px mỗi card */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
             gap: 20px;
         }
 
+        /* Tùy chỉnh riêng cho Card để giao diện lưới trông gọn hơn */
         .card {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 12px; /* Giảm padding một chút để tiết kiệm diện tích */
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
         }
 
-        .card:hover {
-            transform: translateY(-2px);
+        .card-title {
+            margin: 0 0 8px 0;
+            font-size: 1rem; /* Giảm font size tiêu đề một chút để cân đối với lưới */
+            line-height: 1.4;
+            /* Giới hạn tiêu đề trong 2 dòng để các card đều nhau */
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-clamp: 4;
+        }
+
+        /* Đảm bảo ảnh thumbnail luôn đúng tỉ lệ trong lưới */
+        .card-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
         }
 
         .card-meta {
             display: flex;
-            gap: 10px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
             color: #64748b;
+            font-weight: 500;
         }
 
         .badge {
             padding: 2px 8px;
             border-radius: 4px;
-            background: #f1f5f9;
+            background: #eff6ff;
+            color: var(--primary);
             text-transform: uppercase;
-        }
-
-        .card-title {
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
         }
 
         .card-title a {
@@ -102,19 +143,18 @@
         }
 
         .card-title a:hover {
+            text-decoration: underline;
             color: var(--primary);
         }
 
-        .card-desc {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #475569;
+        .card-footer {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 10px;
         }
 
-        .card-footer {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #94a3b8;
+        @media (max-width: 600px) {
+            .filters { gap: 15px; }
         }
     </style>
 </head>
@@ -122,17 +162,22 @@
 
 <div class="container">
     <header>
-        <h1>Daily Immersion</h1>
-        <p>Chọn cấp độ của bạn và bắt đầu đắm mình vào tiếng Anh</p>
+        <p><strong>Ngâm ngaa</strong>: Chọn cấp độ của bạn và bắt đầu đắm mình vào tiếng Anh</p>
     </header>
 
     <div class="filters">
-        <button class="filter-btn active" data-level="all">All Levels</button>
-        <button class="filter-btn" data-level="A1">A1</button>
-        <button class="filter-btn" data-level="A2">A2</button>
-        <button class="filter-btn" data-level="B1">B1</button>
-        <button class="filter-btn" data-level="B2">B2</button>
-        <button class="filter-btn" data-level="C1">C1</button>
+        <div class="filter-group">
+            <button class="cat-btn active" data-cat="listening">📺 YouTube</button>
+            <button class="cat-btn" data-cat="reading">📖 Reading</button>
+        </div>
+
+        <div class="filter-group">
+            <button class="level-btn active" data-level="A1">A1</button>
+            <button class="level-btn" data-level="A2">A2</button>
+            <button class="level-btn" data-level="B1">B1</button>
+            <button class="level-btn" data-level="B2">B2</button>
+            <button class="level-btn" data-level="C1">C1</button>
+        </div>
     </div>
 
     <div id="newsfeed">
@@ -141,59 +186,86 @@
 
 <script>
     let allData = [];
+    let currentLevel = 'A1';
+    let currentCat = 'listening';
 
-    // 1. Lấy dữ liệu từ file data.json
     async function loadFeeds() {
+        const container = document.getElementById('newsfeed');
         try {
-            const response = await fetch('data.json');
+            // Fetch file local trong cùng thư mục
+            const response = await fetch('./data.json');
+            if (!response.ok) throw new Error('Không tìm thấy file data.json');
+            
             allData = await response.json();
-            renderFeeds('all');
+            renderFeeds();
         } catch (error) {
-            document.getElementById('newsfeed').innerHTML = "<p>Đang chờ GitHub Action cập nhật dữ liệu lần đầu...</p>";
+            container.innerHTML = `<div style="text-align:center; padding: 40px; color: #64748b;">
+                <p>⚠️ ${error.message}</p>
+                <small>Đảm bảo bạn đã chạy script Python để tạo data.json</small>
+            </div>`;
         }
     }
 
-    // 2. Hiển thị dữ liệu ra màn hình
-    function renderFeeds(level) {
+    function renderFeeds() {
         const container = document.getElementById('newsfeed');
         container.innerHTML = '';
 
-        const filtered = level === 'all' 
-            ? allData 
-            : allData.filter(item => item.level === level);
+        const filtered = allData.filter(item => 
+            item.level === currentLevel && item.category === currentCat
+        );
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<p style="text-align:center; color: #94a3b8;">Chưa có nội dung mới cho mục này.</p>`;
+            return;
+        }
 
         filtered.forEach(item => {
-            const date = new Date(item.date).toLocaleDateString('vi-VN');
-            const icon = item.category === 'listening' ? 'fa-headphones' : 'fa-book-open';
+            const date = new Date(item.date).toLocaleDateString('vi-VN', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            
+            // Thumbnail xử lý cho YouTube
+            const imgHtml = (currentCat === 'listening' && item.thumbnail) 
+                ? `<img src="${item.thumbnail}" class="card-img" alt="thumbnail" onerror="this.style.display='none'">` 
+                : '';
             
             const card = `
-                <div class="card">
+                <article class="card">
+                    ${imgHtml}
                     <div class="card-meta">
-                        <span class="badge" style="color: #2563eb;">${item.level}</span>
-                        <span><i class="fas ${icon}"></i> ${item.category}</span>
-                        <span>• ${item.source}</span>
+                        <span class="badge">${item.level}</span>
+                        <span>${item.source}</span>
                     </div>
                     <h3 class="card-title">
                         <a href="${item.link}" target="_blank">${item.title}</a>
                     </h3>
-                    <p class="card-desc">${item.description}</p>
-                    <div class="card-footer">Cập nhật ngày: ${date}</div>
-                </div>
+                    <div class="card-footer">📅 ${date}</div>
+                </article>
             `;
             container.innerHTML += card;
         });
     }
 
-    // 3. Xử lý sự kiện bấm nút lọc
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    // Xử lý sự kiện chung cho các nút lọc
+    document.querySelectorAll('.cat-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
-            renderFeeds(e.target.dataset.level);
+            currentCat = e.target.dataset.cat;
+            renderFeeds();
         });
     });
 
-    // Khởi chạy
+    document.querySelectorAll('.level-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            currentLevel = e.target.dataset.level;
+            renderFeeds();
+        });
+    });
+
+    // Chạy khi trang web load
     loadFeeds();
 </script>
 
