@@ -4,57 +4,74 @@ import datetime
 from dateutil import parser # Thư viện giúp đọc mọi định dạng ngày tháng
 
 def fetch_feeds():
-    # 1. Đọc danh sách nguồn từ Bước 1
+    # 1. Đọc danh sách nguồn
     with open('sources.json', 'r', encoding='utf-8') as f:
         sources = json.load(f)
 
     all_items = []
+    
+    # 2. Tính toán ngày hôm nay và hôm qua
+    now = datetime.datetime.now(datetime.timezone.utc)
+    today = now.date()
+    yesterday = today - datetime.timedelta(days=1)
 
-    # 2. Duyệt qua từng Level và Category
-    for level, categories in sources.items():
-        for category, feeds in categories.items():
-            for feed in feeds:
-                print(f"Đang lấy tin từ: {feed['name']} ({level})")
-                try:
-                    # Dùng feedparser để đọc nội dung RSS
-                    d = feedparser.parse(feed['url'])
-                    
-                    for entry in d.entries[:10]: # Lấy 10 tin mới nhất mỗi nguồn
-                        # Chuẩn hóa ngày tháng để sắp xếp Timeline
-                        published_parsed = entry.get('published', entry.get('updated', None))
-                        if published_parsed:
-                            dt = parser.parse(published_parsed)
-                        else:
-                            dt = datetime.datetime.now()
+    print(f"Chỉ lấy tin từ ngày: {yesterday} và {today}")
+
+    # 3. Duyệt qua cấu trúc mới: type (learner/native) -> category (listening/reading) -> sub (youtube/...)
+    for user_type, categories in sources.items():
+        for category, sub_categories in categories.items():
+            for sub_category, feeds in sub_categories.items():
+                for feed in feeds:
+                    print(f"Đang lấy tin từ: {feed['name']} ({user_type}/{category}/{sub_category})")
+                    try:
+                        d = feedparser.parse(feed['url'])
                         
-                        # Lấy ảnh thumbnail nếu là YouTube
-                        thumbnail = ""
-                        if 'media_thumbnail' in entry:
-                            thumbnail = entry.media_thumbnail[0]['url']
-                        elif 'links' in entry: # Backup cho một số nguồn khác
-                            for link in entry.links:
-                                if 'image' in link.get('rel', ''):
-                                    thumbnail = link.href
+                        for entry in d.entries[:15]: 
+                            published_parsed = entry.get('published', entry.get('updated', None))
+                            if published_parsed:
+                                try:
+                                    dt = parser.parse(published_parsed)
+                                    # Chuyển về UTC
+                                    if dt.tzinfo is None:
+                                        dt = dt.replace(tzinfo=datetime.timezone.utc)
+                                    else:
+                                        dt = dt.astimezone(datetime.timezone.utc)
+                                except:
+                                    continue
+                            else:
+                                continue 
+                            
+                            # Kiểm tra ngày: chỉ lấy hôm nay và hôm qua
+                            if dt.date() < yesterday:
+                                continue
 
-                        item = {
-                            "title": entry.title,
-                            "link": entry.link,
-                            "source": feed['name'],
-                            "level": level,
-                            "category": category, # "listening" sẽ tương ứng với Youtube button
-                            "date": dt.isoformat(),
-                            "thumbnail": thumbnail, # Thêm dòng này
-                            "description": entry.get('summary', '')[:200] + '...'
-                        }
+                            thumbnail = ""
+                            if 'media_thumbnail' in entry:
+                                thumbnail = entry.media_thumbnail[0]['url']
+                            elif 'links' in entry:
+                                for link in entry.links:
+                                    if 'image' in link.get('rel', ''):
+                                        thumbnail = link.href
 
-                        all_items.append(item)
-                except Exception as e:
-                    print(f"Lỗi tại {feed['name']}: {e}")
+                            item = {
+                                "title": entry.title,
+                                "link": entry.link,
+                                "source": feed['name'],
+                                "type": user_type,      # 'learner' or 'native'
+                                "category": category,   # 'listening' or 'reading'
+                                "sub": sub_category,    # 'youtube', 'podcast', 'reddit', 'other'
+                                "date": dt.isoformat(),
+                                "thumbnail": thumbnail,
+                                "description": entry.get('summary', '')[:200] + '...'
+                            }
+                            all_items.append(item)
+                    except Exception as e:
+                        print(f"Lỗi tại {feed['name']}: {e}")
 
-    # 3. Sắp xếp tất cả theo thời gian (Mới nhất lên đầu)
+    # 4. Sắp xếp tất cả theo thời gian
     all_items.sort(key=lambda x: x['date'], reverse=True)
 
-    # 4. Lưu kết quả ra file data.json để Web sử dụng
+    # 5. Lưu kết quả
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(all_items, f, ensure_ascii=False, indent=2)
     

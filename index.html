@@ -6,117 +6,175 @@
     <title>Ngâm ngaa - Bunchaway</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-            --btn-idle: #e2e8f0;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #c084fc;
         }
 
         body {
-            /* Sử dụng font hệ thống có sẵn */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 70%);
             color: var(--text);
             margin: 0;
             padding: 20px;
-            line-height: 1.5;
+            line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
         }
 
-        header h1 { margin-bottom: 5px; }
-        header p { color: #64748b; margin-top: 0; }
+        header h1 { 
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        header p { color: var(--text-muted); font-size: 1.1rem; }
 
-        /* Bộ lọc hợp nhất trên cùng 1 hàng */
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 30px;
+        .nav-wrapper {
             position: sticky;
-            top: 10px;
-            z-index: 100;
-            background: rgba(248, 250, 252, 0.9);
-            padding: 10px 0;
-            backdrop-filter: blur(5px);
+            top: 20px;
+            z-index: 1000;
+            margin-bottom: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            padding: 10px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* Group để phân biệt Media và Level (vẫn nằm trên 1 hàng) */
+        .filter-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         .filter-group {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             padding: 4px;
-            background: #f1f5f9;
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            flex-shrink: 0;
         }
 
+
+        .group-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--glass-border);
+            margin: 0 5px;
+        }
+
+        #sub-tabs-container {
+            display: flex;
+        }
+
+        .sub-tabs {
+            display: none;
+            gap: 6px;
+        }
+        .sub-tabs.active { display: flex; }
+
         button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border: 1px solid transparent;
+            border-radius: 12px;
             background: transparent;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            color: #64748b;
-            transition: all 0.2s;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
         }
 
-        /* Màu xanh đồng nhất khi chọn */
+        button:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         button.active {
             background: var(--primary);
             color: white;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
         }
 
-        /* Tìm và thay thế đoạn #newsfeed cũ bằng đoạn này */
+        /* Type buttons slightly emphasized */
+        .type-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
         #newsfeed {
             display: grid;
-            /* Tự động tính toán số cột: tối thiểu 200px mỗi card */
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
             gap: 20px;
+            animation: fadeIn 1s ease-out;
         }
 
-        /* Tùy chỉnh riêng cho Card để giao diện lưới trông gọn hơn */
         .card {
             background: var(--card-bg);
-            padding: 12px; /* Giảm padding một chút để tiết kiệm diện tích */
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid #f1f5f9;
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-        }
-
-        .card-title {
-            margin: 0 0 8px 0;
-            font-size: 1rem; /* Giảm font size tiêu đề một chút để cân đối với lưới */
-            line-height: 1.4;
-            /* Giới hạn tiêu đề trong 2 dòng để các card đều nhau */
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
             overflow: hidden;
-            line-clamp: 4;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
         }
 
-        /* Đảm bảo ảnh thumbnail luôn đúng tỉ lệ trong lưới */
-        .card-img {
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 41, 59, 1);
+            border-color: var(--primary-light);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-img-wrapper {
+            position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: #1e293b;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
         }
 
         .card-meta {
@@ -124,37 +182,79 @@
             align-items: center;
             gap: 8px;
             font-size: 0.75rem;
-            margin-bottom: 8px;
-            color: #64748b;
-            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--text-muted);
         }
 
         .badge {
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: #eff6ff;
-            color: var(--primary);
-            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            font-weight: 700;
+            font-size: 0.65rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 150px;
         }
+
+        .card-title {
+            margin: 0 0 10px 0;
+            font-size: 1.05rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+            font-weight: 600;
+            line-clamp: 3;
+        }
+
 
         .card-title a {
             color: var(--text);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         .card-title a:hover {
-            text-decoration: underline;
-            color: var(--primary);
+            color: var(--primary-light);
         }
 
         .card-footer {
             font-size: 0.75rem;
-            color: #94a3b8;
-            margin-top: 10px;
+            color: var(--text-muted);
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 800px) {
+            .group-divider { display: none; }
+            .filter-row { gap: 8px; }
         }
 
         @media (max-width: 600px) {
-            .filters { gap: 15px; }
+            body { padding: 10px; }
+            .nav-wrapper { border-radius: 0; position: relative; top: 0; margin-bottom: 30px; margin-left: -10px; margin-right: -10px; width: auto; }
+            header h1 { font-size: 2rem; }
+            .filter-row { justify-content: flex-start; overflow-x: auto; padding-bottom: 5px; flex-wrap: nowrap; }
+            .filter-row::-webkit-scrollbar { display: none; }
         }
     </style>
 </head>
@@ -162,47 +262,70 @@
 
 <div class="container">
     <header>
-        <p><strong>Ngâm ngaa</strong>: Chọn cấp độ của bạn và bắt đầu đắm mình vào tiếng Anh</p>
+        <h1>Ngâm ngaa</h1>
+        <p>Chọn con đường học tập và đắm mình vào Tiếng Anh</p>
     </header>
 
-    <div class="filters">
-        <div class="filter-group">
-            <button class="cat-btn active" data-cat="listening">📺 YouTube</button>
-            <button class="cat-btn" data-cat="reading">📖 Reading</button>
-        </div>
+    <div class="nav-wrapper">
+        <div class="filter-row">
+            <!-- Group 1: User Type -->
+            <div class="filter-group type-tabs">
+                <button class="type-btn active" data-type="learner">🧑‍🎓 Learner</button>
+                <button class="type-btn" data-type="native">🌎 Native</button>
+            </div>
 
-        <div class="filter-group">
-            <button class="level-btn active" data-level="A1">A1</button>
-            <button class="level-btn" data-level="A2">A2</button>
-            <button class="level-btn" data-level="B1">B1</button>
-            <button class="level-btn" data-level="B2">B2</button>
-            <button class="level-btn" data-level="C1">C1</button>
+            <div class="group-divider"></div>
+
+            <!-- Group 2: Categories -->
+            <div class="filter-group cat-tabs">
+                <button class="cat-btn active" data-cat="listening">🎧 Listening</button>
+                <button class="cat-btn" data-cat="reading">📖 Reading</button>
+            </div>
+
+            <div class="group-divider sub-divider"></div>
+
+            <!-- Group 3: Sub-tabs (Conditional) -->
+            <div id="sub-tabs-container">
+                <div id="sub-listening" class="filter-group sub-tabs active">
+                    <button class="sub-btn active" data-sub="youtube">📺 Youtube</button>
+                    <button class="sub-btn" data-sub="podcast">🎙️ Podcast</button>
+                </div>
+                <div id="sub-reading" class="filter-group sub-tabs">
+                    <button class="sub-btn active" data-sub="other">📰 Other</button>
+                    <button class="sub-btn" data-sub="reddit">💬 Reddit</button>
+                </div>
+            </div>
         </div>
     </div>
 
+
     <div id="newsfeed">
+        <div style="grid-column: 1 / -1; text-align:center; padding: 40px; color: var(--text-muted);">
+            Đang tải dữ liệu...
         </div>
+    </div>
 </div>
 
 <script>
     let allData = [];
-    let currentLevel = 'A1';
+    let currentType = 'learner';
     let currentCat = 'listening';
+    let currentSub = 'youtube';
 
+    // Xử lý dữ liệu
     async function loadFeeds() {
-        const container = document.getElementById('newsfeed');
         try {
-            // Fetch file local trong cùng thư mục
-            const response = await fetch('./data.json');
+            const response = await fetch('./data.json?v=' + Date.now());
             if (!response.ok) throw new Error('Không tìm thấy file data.json');
-            
             allData = await response.json();
             renderFeeds();
         } catch (error) {
-            container.innerHTML = `<div style="text-align:center; padding: 40px; color: #64748b;">
-                <p>⚠️ ${error.message}</p>
-                <small>Đảm bảo bạn đã chạy script Python để tạo data.json</small>
-            </div>`;
+            document.getElementById('newsfeed').innerHTML = `
+                <div style="grid-column: 1 / -1; text-align:center; padding: 80px; color: var(--text-muted);">
+                    <p style="font-size: 3rem; margin-bottom: 10px;">⚠️</p>
+                    <p>${error.message}</p>
+                    <p><small>Đảm bảo bạn đã chạy update_feeds.py</small></p>
+                </div>`;
         }
     }
 
@@ -211,61 +334,107 @@
         container.innerHTML = '';
 
         const filtered = allData.filter(item => 
-            item.level === currentLevel && item.category === currentCat
+            item.type === currentType && 
+            item.category === currentCat && 
+            item.sub === currentSub
         );
 
         if (filtered.length === 0) {
-            container.innerHTML = `<p style="text-align:center; color: #94a3b8;">Chưa có nội dung mới cho mục này.</p>`;
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align:center; padding: 80px; color: var(--text-muted);">
+                    <p style="font-size: 4rem; opacity: 0.2; margin-bottom: 20px;">📭</p>
+                    <p>Hiện không tìm thấy nội dung mới của hôm nay & hôm qua.</p>
+                </div>`;
             return;
         }
 
-        filtered.forEach(item => {
-            const date = new Date(item.date).toLocaleDateString('vi-VN', {
-                day: '2-digit', month: '2-digit', year: 'numeric'
+        filtered.forEach((item, index) => {
+            const dateObj = new Date(item.date);
+            const dateStr = dateObj.toLocaleDateString('vi-VN', {
+                day: '2-digit', month: '2-digit'
             });
             
-            // Thumbnail xử lý cho YouTube
-            const imgHtml = (currentCat === 'listening' && item.thumbnail) 
-                ? `<img src="${item.thumbnail}" class="card-img" alt="thumbnail" onerror="this.style.display='none'">` 
+            const imgHtml = (item.thumbnail) 
+                ? `<div class="card-img-wrapper"><img src="${item.thumbnail}" class="card-img" alt="thumbnail" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` 
                 : '';
             
-            const card = `
-                <article class="card">
-                    ${imgHtml}
-                    <div class="card-meta">
-                        <span class="badge">${item.level}</span>
-                        <span>${item.source}</span>
-                    </div>
-                    <h3 class="card-title">
-                        <a href="${item.link}" target="_blank">${item.title}</a>
-                    </h3>
-                    <div class="card-footer">📅 ${date}</div>
-                </article>
+            const card = document.createElement('article');
+            card.className = 'card';
+            card.style.animationDelay = (index * 0.05) + 's';
+            card.innerHTML = `
+                ${imgHtml}
+                <div class="card-meta">
+                    <span class="badge" title="${item.source}">${item.source}</span>
+                </div>
+                <h3 class="card-title">
+                    <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
+                </h3>
+                <div class="card-footer">
+                    <span>📅 ${dateStr}</span>
+                    <span style="opacity: 0.5;">${item.sub.toUpperCase()}</span>
+                </div>
             `;
-            container.innerHTML += card;
+            container.appendChild(card);
         });
     }
 
-    // Xử lý sự kiện chung cho các nút lọc
+    // Các hàm chuyển đổi tab
+    function updateTabs() {
+        // Cập nhật Type buttons
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.type === currentType);
+        });
+
+        // Cập nhật Category buttons
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.cat === currentCat);
+        });
+
+        // Cập nhật Sub-tabs hiển thị
+        document.querySelectorAll('.sub-tabs').forEach(group => {
+            group.classList.toggle('active', group.id === `sub-${currentCat}`);
+        });
+
+        // Cập nhật Sub-buttons
+        document.querySelectorAll('.sub-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.sub === currentSub);
+        });
+
+        renderFeeds();
+    }
+
+    // Gán sự kiện
+    document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            currentType = e.currentTarget.dataset.type;
+            updateTabs();
+        });
+    });
+
     document.querySelectorAll('.cat-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            currentCat = e.target.dataset.cat;
-            renderFeeds();
+            currentCat = e.currentTarget.dataset.cat;
+            
+            // Khi chuyển category, phải chọn lại sub mặc định theo yêu cầu
+            // Listening -> Youtube, Reading -> Other
+            if (currentCat === 'listening') {
+                currentSub = 'youtube';
+            } else {
+                currentSub = 'other';
+            }
+            
+            updateTabs();
         });
     });
 
-    document.querySelectorAll('.level-btn').forEach(btn => {
+    document.querySelectorAll('.sub-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            currentLevel = e.target.dataset.level;
-            renderFeeds();
+            currentSub = e.currentTarget.dataset.sub;
+            updateTabs();
         });
     });
 
-    // Chạy khi trang web load
+    // Chạy khi tải trang
     loadFeeds();
 </script>
 
